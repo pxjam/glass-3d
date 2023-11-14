@@ -130,4 +130,25 @@ export const attachPane = (can) => {
     bodyFolder.addBinding(params.cap, 'sheen', { min: 0, max: 1 }).on('change', bodySetter())
     bodyFolder.addBinding(params.cap, 'sheenColor').on('change', bodySetter())
     bodyFolder.addBinding(params.cap, 'sheenRoughness', { min: 0, max: 1 }).on('change', bodySetter())
+
+    const copyButton = pane.addButton({ title: 'Copy' })
+
+    let timeout = null
+    const notify = (title, time = 2500) => {
+        clearTimeout(timeout)
+        copyButton.title = title
+        timeout = setTimeout(() => {
+            copyButton.title = 'Copy'
+        }, time)
+    }
+
+    copyButton.on('click', async () => {
+        try {
+            await navigator.clipboard.writeText(JSON.stringify(params))
+            notify('Copied')
+        } catch (error) {
+            console.error(error)
+            notify('Error')
+        }
+    })
 }
