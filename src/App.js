@@ -6,7 +6,8 @@ import {
     PlaneGeometry,
     Scene,
     VideoTexture,
-    WebGLRenderer
+    WebGLRenderer,
+    Clock
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { unitsPerPixelAtDepth } from './unitsToPixels.js'
@@ -59,8 +60,12 @@ export const App = () => {
     controls.target = can.position
     controls.update()
 
+    const clock = new Clock()
+
     const animate = () => {
         requestAnimationFrame(animate)
+        const delta = clock.getDelta()
+        can.rotation.y += delta * 0.25
         renderer.render(scene, camera)
     }
 
