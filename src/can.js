@@ -1,6 +1,7 @@
 import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color, DoubleSide } from 'three'
 import { GLTFLoader } from 'three/addons'
 import { getPane } from './getPane.js'
+import modelUrl from '/logo-decompressed.gltf?url'
 
 const CAP_HEIGHT = 0.25
 const BODY_HEIGHT = 0.75
@@ -39,7 +40,7 @@ const params = {
 export const loadCan = async () => {
     return new Promise((resolve, reject) => {
         const loader = new GLTFLoader()
-        loader.load('./logo-decompressed.gltf', (data) => {
+        loader.load(modelUrl, (data) => {
             const capMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.cap, side: DoubleSide })
             const bodyMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.body, side: DoubleSide })
             console.log(data)
