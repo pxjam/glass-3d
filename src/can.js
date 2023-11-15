@@ -1,17 +1,11 @@
-import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color, TextureLoader, RepeatWrapping } from 'three'
+import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color } from 'three'
 import { getPane } from './getPane.js'
 
 const CAP_HEIGHT = 0.2
 const BODY_HEIGHT = 0.7
 const INDENT = 0.1
 
-const textures = {
-    none: './default-normal.jpg',
-    tympanus: './normal-map.jpg'
-}
-
 const params = {
-    normalMap: textures.tympanus,
     common: {
         roughness: 0.2,
         metalness: 0.0,
@@ -41,18 +35,6 @@ const params = {
     }
 }
 
-const applyTexture = (can, src) => {
-    const cap = can.getObjectByName('cap')
-    const body = can.getObjectByName('body')
-    const textureLoader = new TextureLoader()
-    const normalMapTexture = textureLoader.load(src)
-    normalMapTexture.wrapS = RepeatWrapping
-    normalMapTexture.wrapT = RepeatWrapping
-    body.material.normalMap = normalMapTexture
-    cap.material.normalMap = normalMapTexture
-    body.material.clearcoatNormalMap = cap.material.clearcoatNormalMap = normalMapTexture
-}
-
 export const createCan = () => {
     const capGeometry = new BoxGeometry(1, CAP_HEIGHT, 1)
     const capMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.cap })
@@ -68,8 +50,6 @@ export const createCan = () => {
 
     const can = new Group()
     can.add(cap, body)
-
-    applyTexture(can, params.normalMap)
 
     return can
 }
@@ -111,9 +91,6 @@ export const attachPane = (can) => {
     pane.addBinding(params.common, 'thickness', { min: 0, max: 3 }).on('change', commonSetter())
     pane.addBinding(params.common, 'transparent').on('change', commonSetter())
     pane.addBinding(params.common, 'opacity', { min: 0, max: 1 }).on('change', commonSetter())
-    pane.addBinding(params, 'normalMap', { options: textures }).on('change', ({ value }) => {
-        applyTexture(can, value)
-    })
 
     const capFolder = pane.addFolder({ title: 'Cap' })
     capFolder.addBinding(params.cap, 'color').on('change', capSetter())
