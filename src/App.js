@@ -53,6 +53,7 @@ export const App = async () => {
     resizeBackground()
 
     const can = await loadCan()
+    can.scale.set(0.5, 0.5, 0.5)
     scene.add(can)
 
     const options = { autoRotate: true }
