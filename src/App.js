@@ -15,6 +15,7 @@ import { unitsPerPixelAtDepth } from './unitsToPixels.js'
 import { cover } from './helpers.js'
 import { attachPane, createCan } from './can.js'
 import { getPane } from './getPane.js'
+import Stats from 'stats.js'
 
 export const App = () => {
     const canvas = document.querySelector('#canvas')
@@ -23,7 +24,7 @@ export const App = () => {
 
     const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true })
     renderer.setSize(width, height)
-    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     const scene = new Scene()
 
@@ -70,11 +71,17 @@ export const App = () => {
 
     const clock = new Clock()
 
+    const stats = new Stats()
+    stats.showPanel(0)
+    document.body.appendChild(stats.dom)
+
     const animate = () => {
         requestAnimationFrame(animate)
+        stats.begin()
         const delta = clock.getDelta()
         if (options.autoRotate) can.rotation.y += delta * 0.25
         renderer.render(scene, camera)
+        stats.end()
     }
 
     animate()
