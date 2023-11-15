@@ -1,4 +1,5 @@
-import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color } from 'three'
+import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color, DoubleSide } from 'three'
+import { GLTFLoader } from 'three/addons'
 import { getPane } from './getPane.js'
 
 const CAP_HEIGHT = 0.25
@@ -23,7 +24,7 @@ const params = {
         attenuationDistance: 1,
         sheen: 0.0,
         sheenColor: '#000000',
-        sheenRoughness: 1.0,
+        sheenRoughness: 1.0
     },
     body: {
         color: '#fa5555',
@@ -31,8 +32,29 @@ const params = {
         attenuationDistance: 1,
         sheen: 0.0,
         sheenColor: '#000000',
-        sheenRoughness: 1.0,
+        sheenRoughness: 1.0
     }
+}
+
+export const loadCan = async () => {
+    return new Promise((resolve, reject) => {
+        const loader = new GLTFLoader()
+        loader.load('/logo-decompressed.gltf', (data) => {
+            const capMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.cap, side: DoubleSide })
+            const bodyMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.body, side: DoubleSide })
+            console.log(data)
+
+            const cap = data.scene.getObjectByName('cap')
+            const body = data.scene.getObjectByName('body')
+
+
+            cap.material = capMaterial
+            body.material = bodyMaterial
+            const group = new Group()
+            group.add(cap, body)
+            resolve(group)
+        }, undefined, reject)
+    })
 }
 
 export const createCan = () => {

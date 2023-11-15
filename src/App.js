@@ -13,11 +13,11 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { unitsPerPixelAtDepth } from './unitsToPixels.js'
 import { cover } from './helpers.js'
-import { attachPane, createCan } from './can.js'
+import { attachPane, loadCan } from './can.js'
 import { getPane } from './getPane.js'
 import Stats from 'stats.js'
 
-export const App = () => {
+export const App = async () => {
     const canvas = document.querySelector('#canvas')
     const width = canvas.offsetWidth
     const height = canvas.offsetHeight
@@ -52,7 +52,7 @@ export const App = () => {
     }
     resizeBackground()
 
-    const can = createCan()
+    const can = await loadCan()
     scene.add(can)
 
     const options = { autoRotate: true }
