@@ -7,7 +7,8 @@ import {
     Scene,
     VideoTexture,
     WebGLRenderer,
-    Clock
+    Clock,
+    SRGBColorSpace
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { unitsPerPixelAtDepth } from './unitsToPixels.js'
@@ -32,6 +33,7 @@ export const App = () => {
     const bgGeometry = new PlaneGeometry(1, 1)
     const video = document.querySelector('.video')
     const bgTexture = new VideoTexture(video)
+    bgTexture.colorSpace = SRGBColorSpace
     bgTexture.generateMipmaps = false
     const bgMaterial = new MeshBasicMaterial({ map: bgTexture })
     const bgMesh = new Mesh(bgGeometry, bgMaterial)
