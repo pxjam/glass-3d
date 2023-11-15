@@ -13,6 +13,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { unitsPerPixelAtDepth } from './unitsToPixels.js'
 import { cover } from './helpers.js'
 import { attachPane, createCan } from './can.js'
+import { getPane } from './getPane.js'
 
 export const App = () => {
     const canvas = document.querySelector('#canvas')
@@ -50,6 +51,11 @@ export const App = () => {
 
     const can = createCan()
     scene.add(can)
+
+    const options = { autoRotate: true }
+    const pane = getPane()
+
+    pane.addBinding(options, 'autoRotate')
     attachPane(can)
 
     const light = new DirectionalLight(0xfff0dd, 1)
@@ -65,7 +71,7 @@ export const App = () => {
     const animate = () => {
         requestAnimationFrame(animate)
         const delta = clock.getDelta()
-        can.rotation.y += delta * 0.25
+        if (options.autoRotate) can.rotation.y += delta * 0.25
         renderer.render(scene, camera)
     }
 
