@@ -8,12 +8,12 @@ import {
     VideoTexture,
     WebGLRenderer,
     Clock,
-    SRGBColorSpace, BoxGeometry
+    SRGBColorSpace
 } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { unitsPerPixelAtDepth } from './unitsToPixels.js'
 import { cover } from './helpers.js'
-import { attachPane, createCan, loadCan } from './can.js'
+import { attachPane, loadCan } from './can.js'
 import { getPane } from './getPane.js'
 import Stats from 'stats.js'
 
@@ -51,13 +51,6 @@ export const App = async () => {
         cover(bgTexture, window.innerWidth / window.innerHeight, 1920 / 1280)
     }
     resizeBackground()
-
-    const cubeGeometry = new BoxGeometry()
-    const cubeMaterial = new MeshBasicMaterial()
-    const cube = new Mesh(cubeGeometry, cubeMaterial)
-    cube.scale.set(0.2, 0.2, 0.2)
-    cube.position.y = -0.5
-    scene.add(cube)
 
     const can = await loadCan()
     can.scale.set(0.5, 0.5, 0.5)
