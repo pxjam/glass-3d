@@ -39,7 +39,7 @@ const params = {
 export const loadCan = async () => {
     return new Promise((resolve, reject) => {
         const loader = new GLTFLoader()
-        loader.load('/logo-decompressed.gltf', (data) => {
+        loader.load('./logo-decompressed.gltf', (data) => {
             const capMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.cap, side: DoubleSide })
             const bodyMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.body, side: DoubleSide })
             console.log(data)
