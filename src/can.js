@@ -1,9 +1,9 @@
 import { BoxGeometry, Mesh, MeshPhysicalMaterial, Group, Color } from 'three'
 import { getPane } from './getPane.js'
 
-const CAP_HEIGHT = 0.2
-const BODY_HEIGHT = 0.7
-const INDENT = 0.1
+const CAP_HEIGHT = 0.25
+const BODY_HEIGHT = 0.75
+const INDENT = 0.07
 
 const params = {
     common: {
