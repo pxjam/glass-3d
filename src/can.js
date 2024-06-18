@@ -43,11 +43,9 @@ export const loadCan = async () => {
         loader.load(modelUrl, (data) => {
             const capMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.cap, side: DoubleSide })
             const bodyMaterial = new MeshPhysicalMaterial({ ...params.common, ...params.body, side: DoubleSide })
-            console.log(data)
 
             const cap = data.scene.getObjectByName('cap')
             const body = data.scene.getObjectByName('body')
-
 
             cap.material = capMaterial
             body.material = bodyMaterial
